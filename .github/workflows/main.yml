@@ -1,1 +1,23 @@
 
+on:
+  push:
+    branches:
+      - master
+      
+      
+jobs:
+  build:
+    runs-on: ubunto-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: "Login to Docker"
+        run: docker login --username ${{ DOCKER_USERNAME }} --password ${{ DOCKER_TOCKEN }}
+        
+      - name: "Building Docker image"
+        run: docker build -t ${{ DOCKER_USERNAME }}/task2 .
+        
+      - name: "Pushing the image"
+        run: docker push ${{ DOCKER_USERNAME }}/task2
+        
